@@ -1,0 +1,47 @@
+#![no_std]
+
+extern crate alloc;
+use alloc::string::String;
+use pwasm_ethereum::{self as eth, types::Address};
+use pwasm_abi_derive::eth_abi;
+
+#[eth_abi(OpenBooksEndpoint, OpenBooksClient)]
+pub trait OpenBooks {
+    /// Adds a new book to the platform
+    fn add_book(&mut self, id: String, daily_rate: u64);
+    /// Initiates a rental transaction
+    fn rent_book(&mut self, id: String, days: u32) -> bool;
+    /// Completes the rental transaction
+    fn complete_rental(&mut self, id: String) -> bool;
+}
+
+struct OpenBooksContract;
+
+impl OpenBooks for OpenBooksContract {
+    fn add_book(&mut self, id: String, daily_rate: u64) {
+        // Logic to store book details
+    }
+
+    fn rent_book(&mut self, id: String, days: u32) -> bool {
+        // Logic to handle rental initiation
+        true
+    }
+
+    fn complete_rental(&mut self, id: String) -> bool {
+        // Logic to release funds and complete the rental
+        true
+    }
+}
+
+// Entry points for the contract
+#[no_mangle]
+pub fn call() {
+    let mut endpoint = OpenBooksEndpoint::new(OpenBooksContract {});
+    pwasm_abi::dispatch(&mut endpoint);
+}
+
+#[no_mangle]
+pub fn deploy() {
+    let endpoint = OpenBooksEndpoint::new(OpenBooksContract {});
+    pwasm_abi::deploy(endpoint);
+}
