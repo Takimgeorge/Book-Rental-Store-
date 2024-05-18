@@ -139,4 +139,3 @@ Deployment
 -   Smart Contract: Analyze with tools like MythX to detect vulnerabilities.
 -   API: Implement standard security measures including validation, authentication, and HTTPS encryption.
 
-This comprehensive documentation should guide developers through setting up, deploying, and using the OpenBooks smart contract and APIs effectively.
